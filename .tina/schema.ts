@@ -3,13 +3,13 @@ import { defineSchema } from "tina-graphql-gateway-cli";
 export default defineSchema({
   collections: [
     {
-      label: "Blog Posts",
-      name: "posts",
-      path: "content/posts",
+      label: "Games",
+      name: "games",
+      path: "content/games",
       templates: [
         {
-          label: "Article",
-          name: "article",
+          label: "Game",
+          name: "game",
           fields: [
             {
               type: "text",
@@ -17,90 +17,98 @@ export default defineSchema({
               name: "title",
             },
             {
-              type: "reference",
-              label: "Author",
-              name: "author",
-              collection: "authors",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      label: "Authors",
-      name: "authors",
-      path: "content/authors",
-      templates: [
-        {
-          label: "Author",
-          name: "author",
-          fields: [
-            {
-              type: "text",
-              label: "Name",
-              name: "name",
+              type: "textarea",
+              label: "Deck",
+              name: "deck",
             },
             {
               type: "text",
-              label: "Avatar",
-              name: "avatar",
+              label: "Image Link",
+              name: "image",
             },
-          ],
-        },
-      ],
-    },
-    {
-      label: "Marketing Pages",
-      name: "marketingPages",
-      path: "content/marketing-pages",
-      templates: [
-        {
-          label: "Landing Page",
-          name: "landingPage",
-          fields: [
+            {
+              type: "text",
+              label: "Wiki Link",
+              name: "wiki",
+            },
             {
               type: "blocks",
-              name: "blocks",
-              label: "Blocks",
+              label: "Variants",
+              name: "variants",
               templates: [
                 {
-                  name: "message",
-                  label: "Message",
+                  label: "Physical",
+                  name: "physical",
                   fields: [
                     {
                       type: "text",
-                      label: "Message Header",
-                      name: "messageHeader",
-                    },
-                    {
-                      type: "textarea",
-                      label: "Message Body",
-                      name: "messageBody",
+                      label: "Console",
+                      name: "console",
                     },
                   ],
                 },
                 {
-                  name: "diagram",
-                  label: "Diagram",
+                  label: "Digital",
+                  name: "digital",
                   fields: [
                     {
                       type: "text",
-                      label: "Diagram Heading",
-                      name: "diagramHeading",
-                    },
-                    {
-                      type: "textarea",
-                      label: "Diagram Description",
-                      name: "diagramDescription",
-                    },
-                    {
-                      type: "text",
-                      label: "Diagram ID",
-                      name: "diagramID",
+                      label: "Store",
+                      name: "store",
                     },
                   ],
                 },
               ],
+            },
+            {
+              type: "text",
+              label: "Location",
+              name: "location",
+            },
+            {
+              type: "textarea",
+              label: "Thoughts",
+              name: "thoughts",
+            },
+            {
+              type: "select",
+              label: "Review",
+              name: "review",
+              options: ["5", "4", "3", "2", "1"],
+            },
+            {
+              type: "text",
+              label: "Time Invested",
+              name: "invested",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      label: "Years",
+      name: "years",
+      path: "content/years",
+      templates: [
+        {
+          label: "Year",
+          name: "year",
+          fields: [
+            {
+              type: "text",
+              label: "Title",
+              name: "title",
+            },
+            {
+              type: "textarea",
+              label: "Deck",
+              name: "deck",
+            },
+            {
+              type: "reference-list",
+              label: "Games",
+              name: "games",
+              collection: "games",
             },
           ],
         },

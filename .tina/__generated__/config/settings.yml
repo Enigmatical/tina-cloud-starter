@@ -1,28 +1,19 @@
 ---
 sections:
-  - label: Blog Posts
-    name: posts
-    path: content/posts
+  - label: Games
+    name: games
+    path: content/games
     templates:
-      - article
+      - game
     type: directory
     create: documents
     match: '**/*.md'
     new_doc_ext: md
-  - label: Authors
-    name: authors
-    path: content/authors
+  - label: Years
+    name: years
+    path: content/years
     templates:
-      - author
-    type: directory
-    create: documents
-    match: '**/*.md'
-    new_doc_ext: md
-  - label: Marketing Pages
-    name: marketingPages
-    path: content/marketing-pages
-    templates:
-      - landingPage
+      - year
     type: directory
     create: documents
     match: '**/*.md'

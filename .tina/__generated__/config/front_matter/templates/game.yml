@@ -1,0 +1,43 @@
+---
+label: Game
+name: game
+fields:
+  - type: text
+    label: Title
+    name: title
+  - type: textarea
+    label: Deck
+    name: deck
+  - type: text
+    label: Image Link
+    name: image
+  - type: text
+    label: Wiki Link
+    name: wiki
+  - name: variants
+    label: Variants
+    type: blocks
+    template_types:
+      - physical
+      - digital
+  - type: text
+    label: Location
+    name: location
+  - type: textarea
+    label: Thoughts
+    name: thoughts
+  - name: review
+    label: Review
+    type: select
+    config:
+      source:
+        type: simple
+      options:
+        - '5'
+        - '4'
+        - '3'
+        - '2'
+        - '1'
+  - type: text
+    label: Time Invested
+    name: invested

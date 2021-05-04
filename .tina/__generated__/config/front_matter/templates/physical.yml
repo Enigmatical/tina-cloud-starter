@@ -1,0 +1,7 @@
+---
+label: Physical
+name: physical
+fields:
+  - type: text
+    label: Console
+    name: console
