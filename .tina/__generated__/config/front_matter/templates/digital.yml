@@ -1,0 +1,7 @@
+---
+label: Digital
+name: digital
+fields:
+  - type: text
+    label: Store
+    name: store

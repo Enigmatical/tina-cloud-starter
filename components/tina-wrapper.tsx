@@ -15,6 +15,7 @@ const TinaWrapper = ({ children }) => {
         tina: createClient(),
       },
       sidebar: {
+        position: "overlay",
         placeholder: SidebarPlaceholder,
       },
       enabled: true,

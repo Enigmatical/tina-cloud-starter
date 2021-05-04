@@ -3,31 +3,25 @@ import {
   useGraphqlForms,
   useDocumentCreatorPlugin,
 } from "tina-graphql-gateway";
-import BlogPostPage, {
-  query,
-  PostQueryResponseType,
-} from "../../posts/[filename]";
+import GamePage, { query, GameQueryResponseType } from "../../games/[filename]";
 
 /**
  * This admin page works in a similar manner to the one found at "pages/admin/index.tsx"
  * The only difference is here we're using a dynamic route variable to fetch the correct file.
  */
 export default function AdminPage(props) {
-  const [payload, isLoading] = useGraphqlForms<PostQueryResponseType>({
+  const [payload, isLoading] = useGraphqlForms<GameQueryResponseType>({
     query,
     variables: { relativePath: `${props.filename}.md` },
   });
   useDocumentCreatorPlugin(
     (res) => console.log("Created new doc", res),
-    /**
-     * Filter `collections` to only allow for new `posts` to be added
-     */
-    (collectionOptions) => {
-      return collectionOptions.filter(({ label }) => label === "Blog Posts");
+    (collections) => {
+      return collections.filter(({ label }) => label === "Games");
     }
   );
 
-  return isLoading ? <p>Loading...</p> : <BlogPostPage {...payload} />;
+  return isLoading ? <p>Loading...</p> : <GamePage {...payload} />;
 }
 
 export const getServerSideProps = ({ params }) => {

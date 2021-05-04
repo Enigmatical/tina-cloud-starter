@@ -46,20 +46,18 @@ type Section {
   documents: [Document]
 }
 
-union SectionDocumentUnion = Posts_Document | Authors_Document | MarketingPages_Document
+union SectionDocumentUnion = Games_Document | Years_Document
 
 input SectionParams {
-  posts: Posts_Input
-  authors: Authors_Input
-  marketingPages: MarketingPages_Input
+  games: Games_Input
+  years: Years_Input
 }
 
 type Mutation {
   addPendingDocument(relativePath: String, collection: String, template: String): Document
   updateDocument(relativePath: String, params: SectionParams): SectionDocumentUnion
-  updatePostsDocument(relativePath: String, params: Posts_Input): Posts_Document
-  updateAuthorsDocument(relativePath: String, params: Authors_Input): Authors_Document
-  updateMarketingPagesDocument(relativePath: String, params: MarketingPages_Input): MarketingPages_Document
+  updateGamesDocument(relativePath: String, params: Games_Input): Games_Document
+  updateYearsDocument(relativePath: String, params: Years_Input): Years_Document
 }
 
 type Query {
@@ -67,41 +65,75 @@ type Query {
   getDocument(collection: String, relativePath: String): SectionDocumentUnion
   getCollections: [Section]
   getCollection(collection: String): Section
-  getPostsDocument(relativePath: String): Posts_Document
-  getPostsList: [Posts_Document]
-  getAuthorsDocument(relativePath: String): Authors_Document
-  getAuthorsList: [Authors_Document]
-  getMarketingPagesDocument(relativePath: String): MarketingPages_Document
-  getMarketingPagesList: [MarketingPages_Document]
+  getGamesDocument(relativePath: String): Games_Document
+  getGamesList: [Games_Document]
+  getYearsDocument(relativePath: String): Years_Document
+  getYearsList: [Years_Document]
 }
 
-union Posts_Data = Article_Doc_Data
+union Games_Data = Game_Doc_Data
 
-input Posts_Input {
-  article: Article_Doc_Input
+input Games_Input {
+  game: Game_Doc_Input
 }
 
-union Posts_Values = Article_Doc_Values
+union Games_Values = Game_Doc_Values
 
-union Posts_Form = Article_Doc_Form
+union Games_Form = Game_Doc_Form
 
-type Posts_Document implements Node & Document {
+type Games_Document implements Node & Document {
   id: ID!
   sys: SystemInfo
-  data: Posts_Data
-  values: Posts_Values
-  form: Posts_Form
+  data: Games_Data
+  values: Games_Values
+  form: Games_Form
 }
 
-type Article_Doc_Data {
+type Physical_Data {
+  console: String
+}
+
+type Digital_Data {
+  store: String
+}
+
+union Game_Variants_Data = Physical_Data | Digital_Data
+
+type Game_Doc_Data {
   title: String
-  author: Authors_Document
+  deck: String
+  image: String
+  wiki: String
+  variants: [Game_Variants_Data]
+  location: String
+  thoughts: String
+  review: String
+  invested: String
   _body: String
 }
 
-type Article_Doc_Values {
+type Physical_Values {
+  console: String
+  _template: String
+}
+
+type Digital_Values {
+  store: String
+  _template: String
+}
+
+union Game_Variants_Values = Physical_Values | Digital_Values
+
+type Game_Doc_Values {
   title: String
-  author: Reference
+  deck: String
+  image: String
+  wiki: String
+  variants: [Game_Variants_Values]
+  location: String
+  thoughts: String
+  review: Reference
+  invested: String
   _body: String
   _template: String
 }
@@ -112,6 +144,40 @@ type TextField implements FormField {
   component: String
 }
 
+type TextareaField implements FormField {
+  name: String
+  label: String
+  component: String
+}
+
+union Physical_FormFieldsUnion = TextField
+
+type Physical_Form {
+  label: String
+  name: String
+  fields: [Physical_FormFieldsUnion]
+}
+
+union Digital_FormFieldsUnion = TextField
+
+type Digital_Form {
+  label: String
+  name: String
+  fields: [Digital_FormFieldsUnion]
+}
+
+type Game_Variants_BlocksFieldTemplates {
+  physical: Physical_Form
+  digital: Digital_Form
+}
+
+type Game_Variants_BlocksField implements FormField {
+  name: String
+  label: String
+  component: String
+  templates: Game_Variants_BlocksFieldTemplates
+}
+
 type SelectField implements FormField {
   name: String
   label: String
@@ -119,182 +185,95 @@ type SelectField implements FormField {
   options: [String]
 }
 
-type TextareaField implements FormField {
-  name: String
-  label: String
-  component: String
-}
+union Game_Doc_FormFieldsUnion = TextField | TextareaField | Game_Variants_BlocksField | SelectField
 
-union Article_Doc_FormFieldsUnion = TextField | SelectField | TextareaField
-
-type Article_Doc_Form {
+type Game_Doc_Form {
   label: String
   name: String
-  fields: [Article_Doc_FormFieldsUnion]
+  fields: [Game_Doc_FormFieldsUnion]
 }
 
-input Article_Doc_Input {
+input Physical_Input {
+  console: String
+}
+
+input Digital_Input {
+  store: String
+}
+
+input Variants_Input {
+  physical: Physical_Input
+  digital: Digital_Input
+}
+
+input Game_Doc_Input {
   title: String
-  author: String
+  deck: String
+  image: String
+  wiki: String
+  variants: [Variants_Input]
+  location: String
+  thoughts: String
+  review: String
+  invested: String
   _body: String
 }
 
-union Authors_Data = Author_Doc_Data
+union Years_Data = Year_Doc_Data
 
-input Authors_Input {
-  author: Author_Doc_Input
+input Years_Input {
+  year: Year_Doc_Input
 }
 
-union Authors_Values = Author_Doc_Values
+union Years_Values = Year_Doc_Values
 
-union Authors_Form = Author_Doc_Form
+union Years_Form = Year_Doc_Form
 
-type Authors_Document implements Node & Document {
+type Years_Document implements Node & Document {
   id: ID!
   sys: SystemInfo
-  data: Authors_Data
-  values: Authors_Values
-  form: Authors_Form
+  data: Years_Data
+  values: Years_Values
+  form: Years_Form
 }
 
-type Author_Doc_Data {
-  name: String
-  avatar: String
+type Year_Doc_Data {
+  title: String
+  deck: String
+  games: [Games_Document]
   _body: String
 }
 
-type Author_Doc_Values {
-  name: String
-  avatar: String
-  _body: String
-  _template: String
-}
-
-union Author_Doc_FormFieldsUnion = TextField | TextareaField
-
-type Author_Doc_Form {
-  label: String
-  name: String
-  fields: [Author_Doc_FormFieldsUnion]
-}
-
-input Author_Doc_Input {
-  name: String
-  avatar: String
-  _body: String
-}
-
-union MarketingPages_Data = LandingPage_Doc_Data
-
-input MarketingPages_Input {
-  landingPage: LandingPage_Doc_Input
-}
-
-union MarketingPages_Values = LandingPage_Doc_Values
-
-union MarketingPages_Form = LandingPage_Doc_Form
-
-type MarketingPages_Document implements Node & Document {
-  id: ID!
-  sys: SystemInfo
-  data: MarketingPages_Data
-  values: MarketingPages_Values
-  form: MarketingPages_Form
-}
-
-type Message_Data {
-  messageHeader: String
-  messageBody: String
-}
-
-type Diagram_Data {
-  diagramHeading: String
-  diagramDescription: String
-  diagramID: String
-}
-
-union LandingPage_Blocks_Data = Message_Data | Diagram_Data
-
-type LandingPage_Doc_Data {
-  blocks: [LandingPage_Blocks_Data]
-  _body: String
-}
-
-type Message_Values {
-  messageHeader: String
-  messageBody: String
-  _template: String
-}
-
-type Diagram_Values {
-  diagramHeading: String
-  diagramDescription: String
-  diagramID: String
-  _template: String
-}
-
-union LandingPage_Blocks_Values = Message_Values | Diagram_Values
-
-type LandingPage_Doc_Values {
-  blocks: [LandingPage_Blocks_Values]
+type Year_Doc_Values {
+  title: String
+  deck: String
+  games: [String]
   _body: String
   _template: String
 }
 
-union Message_FormFieldsUnion = TextField | TextareaField
+union List_FormFieldsUnion = TextField | SelectField
 
-type Message_Form {
-  label: String
-  name: String
-  fields: [Message_FormFieldsUnion]
-}
-
-union Diagram_FormFieldsUnion = TextField | TextareaField
-
-type Diagram_Form {
-  label: String
-  name: String
-  fields: [Diagram_FormFieldsUnion]
-}
-
-type LandingPage_Blocks_BlocksFieldTemplates {
-  message: Message_Form
-  diagram: Diagram_Form
-}
-
-type LandingPage_Blocks_BlocksField implements FormField {
+type ListField implements FormField {
   name: String
   label: String
   component: String
-  templates: LandingPage_Blocks_BlocksFieldTemplates
+  defaultItem: String
+  field: List_FormFieldsUnion
 }
 
-union LandingPage_Doc_FormFieldsUnion = LandingPage_Blocks_BlocksField | TextareaField
+union Year_Doc_FormFieldsUnion = TextField | TextareaField | ListField
 
-type LandingPage_Doc_Form {
+type Year_Doc_Form {
   label: String
   name: String
-  fields: [LandingPage_Doc_FormFieldsUnion]
+  fields: [Year_Doc_FormFieldsUnion]
 }
 
-input Message_Input {
-  messageHeader: String
-  messageBody: String
-}
-
-input Diagram_Input {
-  diagramHeading: String
-  diagramDescription: String
-  diagramID: String
-}
-
-input Blocks_Input {
-  message: Message_Input
-  diagram: Diagram_Input
-}
-
-input LandingPage_Doc_Input {
-  blocks: [Blocks_Input]
+input Year_Doc_Input {
+  title: String
+  deck: String
+  games: [String]
   _body: String
 }
 
