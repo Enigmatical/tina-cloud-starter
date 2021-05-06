@@ -1,18 +1,43 @@
 import type { Games_Document } from "../../.tina/__generated__/types";
 import { createLocalClient } from "../../utils";
+import Nav from "../../components/Nav";
 import GamesRenderer from "../../components/GamesRenderer";
 
 export default function GamePage(props: GameQueryResponseType) {
-  return <GamesRenderer {...props.getGamesDocument.data} />;
+  return (
+    <>
+      <Nav active="/games" />
+      <GamesRenderer {...props.getGamesDocument} />
+    </>
+  );
 }
 
 export const query = (gql) => gql`
   query GameQuery($relativePath: String!) {
     getGamesDocument(relativePath: $relativePath) {
+      sys {
+        collection {
+          slug
+        }
+        breadcrumbs(excludeExtension: true)
+      }
       data {
         ... on Game_Doc_Data {
           title
           deck
+          image
+          wiki
+          thoughts
+          review
+          invested
+          variants {
+            ... on Physical_Data {
+              console
+            }
+            ... on Digital_Data {
+              store
+            }
+          }
           _body
         }
       }

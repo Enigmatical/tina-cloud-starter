@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 const TinaWrapper = dynamic(() => import("../components/tina-wrapper"));
 
 function MyApp({ Component, pageProps }) {
+  console.log("MyApp running");
   const { route, asPath } = useRouter();
 
   /**
@@ -15,6 +16,7 @@ function MyApp({ Component, pageProps }) {
    * in their bundles.
    */
   if (route.startsWith("/admin")) {
+    console.log("route", route);
     return (
       <TinaWrapper>
         <Component {...pageProps} />

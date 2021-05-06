@@ -180,7 +180,6 @@ export type Game_Doc_Data = {
   image?: Maybe<Scalars['String']>;
   wiki?: Maybe<Scalars['String']>;
   variants?: Maybe<Array<Maybe<Game_Variants_Data>>>;
-  location?: Maybe<Scalars['String']>;
   thoughts?: Maybe<Scalars['String']>;
   review?: Maybe<Scalars['String']>;
   invested?: Maybe<Scalars['String']>;
@@ -208,7 +207,6 @@ export type Game_Doc_Values = {
   image?: Maybe<Scalars['String']>;
   wiki?: Maybe<Scalars['String']>;
   variants?: Maybe<Array<Maybe<Game_Variants_Values>>>;
-  location?: Maybe<Scalars['String']>;
   thoughts?: Maybe<Scalars['String']>;
   review?: Maybe<Scalars['Reference']>;
   invested?: Maybe<Scalars['String']>;
@@ -298,7 +296,6 @@ export type Game_Doc_Input = {
   image?: Maybe<Scalars['String']>;
   wiki?: Maybe<Scalars['String']>;
   variants?: Maybe<Array<Maybe<Variants_Input>>>;
-  location?: Maybe<Scalars['String']>;
   thoughts?: Maybe<Scalars['String']>;
   review?: Maybe<Scalars['String']>;
   invested?: Maybe<Scalars['String']>;

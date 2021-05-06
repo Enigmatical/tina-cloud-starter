@@ -20,9 +20,6 @@ fields:
     template_types:
       - physical
       - digital
-  - type: text
-    label: Location
-    name: location
   - type: textarea
     label: Thoughts
     name: thoughts

@@ -1,23 +1,45 @@
 import type { Years_Document } from "../../.tina/__generated__/types";
 import { createLocalClient } from "../../utils";
+import Nav from "../../components/Nav";
 import YearsRenderer from "../../components/YearsRenderer";
 
 export default function YearPage(props: YearQueryResponseType) {
-  return <YearsRenderer {...props.getYearsDocument.data} />;
+  return (
+    <>
+      <Nav active="/years" />
+      <YearsRenderer {...props.getYearsDocument} />
+    </>
+  );
 }
+
+export type YearQueryResponseType = {
+  getYearsDocument: Years_Document;
+};
 
 export const query = (gql) => gql`
   query YearQuery($relativePath: String!) {
     getYearsDocument(relativePath: $relativePath) {
+      sys {
+        collection {
+          slug
+        }
+      }
       data {
         ... on Year_Doc_Data {
           title
           deck
           games {
             ... on Games_Document {
+              sys {
+                collection {
+                  slug
+                }
+                breadcrumbs(excludeExtension: true)
+              }
               data {
                 ... on Game_Doc_Data {
                   title
+                  image
                 }
               }
             }
@@ -28,10 +50,6 @@ export const query = (gql) => gql`
     }
   }
 `;
-
-export type YearQueryResponseType = {
-  getYearsDocument: Years_Document;
-};
 
 const client = createLocalClient();
 
