@@ -127,7 +127,7 @@ export type GamesQueryResponseType = {
   getGamesList: Games_Document[];
 };
 
-const query = (gql) => gql`
+export const query = (gql) => gql`
   query GamesQuery {
     getGamesList {
       id

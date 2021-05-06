@@ -113,7 +113,7 @@ export type YearsQueryResponseType = {
   getYearsList: Years_Document[];
 };
 
-const query = (gql) => gql`
+export const query = (gql) => gql`
   query YearsQuery {
     getYearsList {
       id
