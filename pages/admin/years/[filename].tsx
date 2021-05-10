@@ -14,6 +14,7 @@ export default function AdminPage(props) {
     query,
     variables: { relativePath: `${props.filename}.md` },
   });
+
   useDocumentCreatorPlugin(
     (res) => console.log("Created new doc", res),
     (collections) => {

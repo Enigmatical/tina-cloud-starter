@@ -61,11 +61,6 @@ export default defineSchema({
               ],
             },
             {
-              type: "text",
-              label: "Location",
-              name: "location",
-            },
-            {
               type: "textarea",
               label: "Thoughts",
               name: "thoughts",

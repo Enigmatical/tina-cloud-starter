@@ -105,7 +105,6 @@ type Game_Doc_Data {
   image: String
   wiki: String
   variants: [Game_Variants_Data]
-  location: String
   thoughts: String
   review: String
   invested: String
@@ -130,7 +129,6 @@ type Game_Doc_Values {
   image: String
   wiki: String
   variants: [Game_Variants_Values]
-  location: String
   thoughts: String
   review: Reference
   invested: String
@@ -212,7 +210,6 @@ input Game_Doc_Input {
   image: String
   wiki: String
   variants: [Variants_Input]
-  location: String
   thoughts: String
   review: String
   invested: String
