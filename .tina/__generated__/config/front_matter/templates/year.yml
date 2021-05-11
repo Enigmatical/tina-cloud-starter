@@ -15,3 +15,5 @@ fields:
       source:
         type: pages
         section: games
+pages:
+  - content/years/_2021.md
